@@ -20,7 +20,7 @@ class AddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Delivery location'),
+        title: const Text('Delivery location'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -30,41 +30,41 @@ class AddressScreen extends StatelessWidget {
             Text('Order: $order'),
             Text('Package Name: $packageName'),
             Text('Package Details: $packageDetails'),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Enter Your Information:',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFormField(
               controller: emailAddressController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Email Address',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFormField(
               controller: contactNumberController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Contact Number',
                 border: OutlineInputBorder(),
               ),
             ),
 
-SizedBox(height: 10),
+const SizedBox(height: 10),
             TextFormField(
               controller: addressController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Address',
                 border: OutlineInputBorder(),
               ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
 
@@ -79,7 +79,7 @@ SizedBox(height: 10),
                     ),
                   );
                 },
-              child: Text('Purchase'),
+              child: const Text('Purchase'),
             ),
           ],
         ),

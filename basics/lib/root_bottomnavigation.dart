@@ -2,10 +2,10 @@
 
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
-import 'home.dart';
-import 'package.dart';
-import 'user.dart';
-import 'product.dart';
+import '2_bottom_nav_screens/home.dart';
+import '2_bottom_nav_screens/package.dart';
+import '2_bottom_nav_screens/user.dart';
+import '2_bottom_nav_screens/product.dart';
 
 class RootBottomNavigation extends StatefulWidget {
   const RootBottomNavigation({Key? key}) : super(key: key);
@@ -28,7 +28,7 @@ class _RootBottomNavigationState extends State<RootBottomNavigation> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.grey,
         selectedItemColor: Colors.amber,
-        unselectedItemColor: Colors.black, // Set the unselected item color
+        unselectedItemColor: Colors.black, 
         onTap: (index) {
           setState(() {
             _currentIndex = index;
