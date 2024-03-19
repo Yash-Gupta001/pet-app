@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.amber,
         ),
       ),
-      initialRoute: 'splash',
+      initialRoute: 'navigation',
       routes: {
         'phone': (context) => const MyPhone(),
         'otp': (context) => const MyVerify(),

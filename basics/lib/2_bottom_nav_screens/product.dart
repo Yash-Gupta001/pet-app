@@ -1,5 +1,12 @@
 import 'package:basics/Address.dart';
 import 'package:flutter/material.dart';
+import 'clothes/cloth_product.dart';
+import 'food/food_product.dart';
+import 'medicine/medicine.dart';
+import 'pet_accessories/accessories.dart';
+import 'shampoo/pet_shampoo.dart';  
+import 'toys/pet_toy.dart'; 
+
 
 class ProductScreen extends StatelessWidget {
   @override

@@ -1,5 +1,3 @@
-
-
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
 import '2_bottom_nav_screens/home.dart';

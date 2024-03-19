@@ -43,6 +43,7 @@ dependencies:
   upi_india: ^3.0.1
   google_maps_flutter: ^2.6.0
   video_player: ^2.8.3
+  youtube_player_flutter: ^9.0.0
 
 
 dev_dependencies:

@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 120,
+        toolbarHeight: 100,
         title: const Text(
           "Furniwas",
           style: TextStyle(
@@ -28,11 +28,11 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Align(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  "Pet Care",
+                  "Pet Care tips",
                   style: Theme.of(context).textTheme.headline5?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Colors.amber,
@@ -62,9 +62,16 @@ class HomeScreen extends StatelessWidget {
                     width: screenWidth,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(0, 2),
+                          blurRadius: 6.0,
+                        ),
+                      ],
                     ),
-                    child: Opacity(
-                      opacity: 1, // Adjust the opacity as needed
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
                       child: Image.asset(
                         'assets/food.avif',
                         fit: BoxFit.cover,
@@ -113,11 +120,18 @@ class HomeScreen extends StatelessWidget {
                     width: screenWidth,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(0, 2),
+                          blurRadius: 6.0,
+                        ),
+                      ],
                     ),
-                    child: Opacity(
-                      opacity: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
                       child: Image.asset(
-                        'assets/habitat.jfif',
+                        'assets/habitat.avif',
                         fit: BoxFit.cover,
                         width: double.infinity,
                         height: double.infinity,
@@ -133,7 +147,7 @@ class HomeScreen extends StatelessWidget {
                     child: Text(
                       "Habitat",
                       style: TextStyle(
-                        color: Colors.amber,
+                        color: Colors.white,
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
@@ -164,9 +178,16 @@ class HomeScreen extends StatelessWidget {
                     width: screenWidth,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(0, 2),
+                          blurRadius: 6.0,
+                        ),
+                      ],
                     ),
-                    child: Opacity(
-                      opacity: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
                       child: Image.asset(
                         'assets/hairs.jpg',
                         fit: BoxFit.cover,
@@ -184,7 +205,7 @@ class HomeScreen extends StatelessWidget {
                     child: Text(
                       "Hair",
                       style: TextStyle(
-                        color: Colors.amber,
+                        color: Colors.white,
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
@@ -215,9 +236,16 @@ class HomeScreen extends StatelessWidget {
                     width: screenWidth,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(0, 2),
+                          blurRadius: 6.0,
+                        ),
+                      ],
                     ),
-                    child: Opacity(
-                      opacity: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
                       child: Image.asset(
                         'assets/exercise.jfif',
                         fit: BoxFit.cover,
@@ -235,7 +263,7 @@ class HomeScreen extends StatelessWidget {
                     child: Text(
                       "Exercise",
                       style: TextStyle(
-                        color: Colors.amber,
+                        color: Colors.white,
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
@@ -266,11 +294,18 @@ class HomeScreen extends StatelessWidget {
                     width: screenWidth,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(0, 2),
+                          blurRadius: 6.0,
+                        ),
+                      ],
                     ),
-                    child: Opacity(
-                      opacity: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
                       child: Image.asset(
-                        'assets/weight_management.jfif',
+                        'assets/fatty.jpg',
                         fit: BoxFit.cover,
                         width: double.infinity,
                         height: double.infinity,
@@ -286,7 +321,7 @@ class HomeScreen extends StatelessWidget {
                     child: Text(
                       "Weight Management",
                       style: TextStyle(
-                        color: Colors.amber,
+                        color: Colors.white,
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
@@ -317,11 +352,18 @@ class HomeScreen extends StatelessWidget {
                     width: screenWidth,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(0, 2),
+                          blurRadius: 6.0,
+                        ),
+                      ],
                     ),
-                    child: Opacity(
-                      opacity: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
                       child: Image.asset(
-                        'assets/aggressive.jfif',
+                        'assets/Anger.jpg',
                         fit: BoxFit.cover,
                         width: double.infinity,
                         height: double.infinity,
@@ -337,7 +379,7 @@ class HomeScreen extends StatelessWidget {
                     child: Text(
                       "Aggression Control",
                       style: TextStyle(
-                        color: Colors.amber,
+                        color: Colors.white,
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
