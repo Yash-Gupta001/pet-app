@@ -5,7 +5,6 @@ import 'package:basics/1_home_screens/Hair.dart';
 import 'package:basics/1_home_screens/Weight.dart';
 import 'package:basics/1_home_screens/Exercise.dart';
 import 'package:basics/1_home_screens/Aggressive.dart';
-//import 'package:video_player/video_player.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

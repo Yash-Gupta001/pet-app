@@ -10,6 +10,15 @@ class PackageScreen extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: 80,
         title: const Text("Packages"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // map to be added
+            },
+            icon: const Icon(Icons.location_on),
+          ),
+        ],
+        //centerTitle: true,
       ),
       body: Center(
         child: SingleChildScrollView(

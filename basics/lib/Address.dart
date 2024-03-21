@@ -70,8 +70,8 @@ const SizedBox(height: 10),
 
                 Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => UpiPaymentScreen(
-                        order: 1, // Pass the appropriate order or data here.
+                      builder: (context) => const UpiPaymentScreen(
+                        order: 1,
                         packageName: "Day Care- 1D",
                         packagePrice: '\u20B9 150',
                         packageDetails: "Includes all services-:Feeding,Grooming,Outdoor Play,Medical Care etc.",

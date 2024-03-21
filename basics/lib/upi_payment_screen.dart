@@ -9,7 +9,7 @@ class UpiPaymentScreen extends StatefulWidget {
   final String packagePrice;
   final String packageDetails;
 
-  UpiPaymentScreen({
+  const UpiPaymentScreen({
     required this.order,
     required this.packageName,
     required this.packagePrice,
@@ -63,49 +63,50 @@ class _UpiPaymentScreenState extends State<UpiPaymentScreen>{
   }
 
   Widget displayUpiApps() {
-    if (apps == null)
-      return const Center(child: CircularProgressIndicator());
-    else if (apps!.length == 0)
-      return Center(
-        child: Text(
-          "No apps found to handle transaction.",
-          style: header,
-        ),
-      );
-    else
-      return Align(
-        alignment: Alignment.topCenter,
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Wrap(
-            children: apps!.map<Widget>((UpiApp app) {
-              return GestureDetector(
-                onTap: () {
-                  _transaction = initiateTransaction(app);
-                  setState(() {});
-                },
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Image.memory(
-                        app.icon,
-                        height: 60,
-                        width: 60,
-                      ),
-                      Text(app.name),
-                    ],
-                  ),
+  if (apps == null)
+    return const Center(child: CircularProgressIndicator());
+  else if (apps!.length == 0)
+    return Center(
+      child: Text(
+        "No apps found to handle transaction.",
+        style: header,
+      ),
+    );
+  else {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Wrap(
+          children: apps!.map<Widget>((UpiApp app) {
+            return GestureDetector(
+              onTap: () {
+                _transaction = initiateTransaction(app);
+                setState(() {});
+              },
+              child: Container(
+                height: 100,
+                width: 100,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.memory(
+                      app.icon,
+                      height: 60,
+                      width: 60,
+                    ),
+                    Text(app.name),
+                  ],
                 ),
-              );
-            }).toList(),
-          ),
+              ),
+            );
+          }).toList(),
         ),
-      );
+      ),
+    );
   }
+}
 
   String _upiErrorHandler(error) {
     switch (error) {

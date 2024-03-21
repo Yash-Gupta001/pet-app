@@ -1,4 +1,3 @@
-import 'package:basics/Address.dart';
 import 'package:flutter/material.dart';
 import 'clothes/cloth_product.dart';
 import 'food/food_product.dart';
@@ -23,14 +22,10 @@ class ProductScreen extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
+                    Navigator.push(
+                      context,
                       MaterialPageRoute(
-                        builder: (context) => AddressScreen(
-                          order: 1,
-                          packageName: "Toys",
-                          packageDetails:
-                              "Little joyful moments shared with pets can brighten your day and strengthen the bond between you and your furry friend.",
-                        ),
+                        builder: (context) => Toy(),
                       ),
                     );
                   },
@@ -45,14 +40,10 @@ class ProductScreen extends StatelessWidget {
                 //
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
+                    Navigator.push(
+                      context,
                       MaterialPageRoute(
-                        builder: (context) => AddressScreen(
-                          order: 2,
-                          packageName: "Food",
-                          packageDetails:
-                              "Pet food: A tasty delight that brings joy to furry companions.",
-                        ),
+                        builder: (context) => Food(),
                       ),
                     );
                   },
@@ -67,14 +58,10 @@ class ProductScreen extends StatelessWidget {
                 //
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
+                    Navigator.push(
+                      context,
                       MaterialPageRoute(
-                        builder: (context) => AddressScreen(
-                          order: 3,
-                          packageName: "Shampoo",
-                          packageDetails:
-                              "A splash of freshness that leaves pets feeling and smelling fantastic",
-                        ),
+                        builder: (context) => Shampoo(),
                       ),
                     );
                   },
@@ -87,17 +74,21 @@ class ProductScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 //
+
+
+
+
+                /*
+
+                                to be continued
+
+                */
                 GestureDetector(
                   onTap: () {
-                    // Navigate to AddressScreen and pass package details.
-                    Navigator.of(context).push(
+                    Navigator.push(
+                      context,
                       MaterialPageRoute(
-                        builder: (context) => AddressScreen(
-                          order: 4, // Pass the appropriate order or data here.
-                          packageName: "clothes",
-                          packageDetails:
-                              "A stylish touch for pets, keeping them comfy and looking adorable",
-                        ),
+                        builder: (context) => Clothes(),
                       ),
                     );
                   },
@@ -112,15 +103,10 @@ class ProductScreen extends StatelessWidget {
                 //
                 GestureDetector(
                   onTap: () {
-                    // it will Navigate you to AddressScreen and pass package detail
-                    Navigator.of(context).push(
+                    Navigator.push(
+                      context,
                       MaterialPageRoute(
-                        builder: (context) => AddressScreen(
-                          order: 5, 
-                          packageName: "Pet Accessories",
-                          packageDetails:
-                              "Stock pet accessories like collars, leashes, harnesses, and ID tags",
-                        ),
+                        builder: (context) => Accessories(),
                       ),
                     );
                   },
@@ -135,14 +121,10 @@ class ProductScreen extends StatelessWidget {
                 //
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
+                    Navigator.push(
+                      context,
                       MaterialPageRoute(
-                        builder: (context) => AddressScreen(
-                          order: 6,
-                          packageName: "Medicines",
-                          packageDetails:
-                              "Pet medicine: A caring remedy that ensures the well-being of our beloved pets.",
-                        ),
+                        builder: (context) => Medicine(),
                       ),
                     );
                   },
@@ -201,10 +183,10 @@ class PackageCard extends StatelessWidget {
             ),
           ),
           Container(
-            width: 80, // Adjust width whatever you want
+            width: 80,
             child: Image.asset(
-              imagePath, // Use the provided image path
-              fit: BoxFit.cover, // Adjust the fit as needed
+              imagePath,
+              fit: BoxFit.cover, 
             ),
           ),
         ],

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.amber,
         ),
       ),
-      initialRoute: 'navigation',
+      initialRoute: 'splash',
       routes: {
         'phone': (context) => const MyPhone(),
         'otp': (context) => const MyVerify(),
@@ -34,8 +34,7 @@ class MyApp extends StatelessWidget {
         'navigation': (context) => const RootBottomNavigation(),
         'splash': (context) => SplashScreenWidget(),
       },
-      // Set the splash screen as the home screen.
-      home: const RootBottomNavigation(), // Use a different name for the SplashScreen widget.
+      home: const RootBottomNavigation(),
     );
   }
 }
@@ -49,11 +48,10 @@ class _SplashScreenState extends State<SplashScreenWidget> {
   @override
   void initState() {
     super.initState();
-    // Add a delay to simulate the splash screen for 2 seconds.
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MyPhone()),
+        MaterialPageRoute(builder: (context) => const MyPhone()),
       );
     });
   }
@@ -76,31 +74,3 @@ class _SplashScreenState extends State<SplashScreenWidget> {
     );
   }
 }
-
-
-
-
-
-/*
-
-
-public class Solution {
-    public int strStr(String haystack, String needle) {
-
-        final int a = haystack.length();
-        final int b = needle.length();
-        //int i = 0;
-
-        for (int i=0 ; i < a - b + 1; ++i) {
-            String substring = haystack.substring(i, i + b);
-            if (substring.equals(needle))
-                return i;
-        }
-        
-        return -1;
-    }
-}
-
-
-
-*/
