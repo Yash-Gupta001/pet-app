@@ -7,6 +7,8 @@ import 'authentication/verify.dart';
 import '2_bottom_nav_screens/home.dart';
 import '2_bottom_nav_screens/package.dart';
 import '2_bottom_nav_screens/user.dart';
+import 'package:basics/navigation/map.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: 'splash',
       routes: {
+        'map': (context) =>  Mapscreen(),
         'phone': (context) => const MyPhone(),
         'otp': (context) => const MyVerify(),
         'home': (context) => HomeScreen(),

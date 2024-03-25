@@ -1,5 +1,5 @@
-<<<<<<< HEAD
 import 'package:flutter/material.dart';
+
 
 class Clothes extends StatelessWidget {
   @override
@@ -22,6 +22,3 @@ class Clothes extends StatelessWidget {
     );
   }
 }
-=======
-// TODO Implement this library.
->>>>>>> origin/main

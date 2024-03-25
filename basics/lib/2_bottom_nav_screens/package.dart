@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../upi_payment_screen.dart';
+import 'package:basics/navigation/map.dart';
 //import 'package:'
 
 
@@ -13,12 +14,17 @@ class PackageScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              // map to be added
-            },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Mapscreen(),
+                      ),
+                    );
+                  },
             icon: const Icon(Icons.location_on),
           ),
         ],
-        //centerTitle: true,
+        centerTitle: true,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -30,7 +36,7 @@ class PackageScreen extends StatelessWidget {
                   // Navigate to UpiPaymentScreen and pass package details.
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => UpiPaymentScreen(
+                      builder: (context) => const UpiPaymentScreen(
                         order: 1, // Pass the appropriate order or data here.
                         packageName: "Day Care- 1D",
                         packagePrice: '\u20B9 150',
@@ -53,7 +59,7 @@ class PackageScreen extends StatelessWidget {
                   // Navigate to UpiPaymentScreen and pass package details.
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => UpiPaymentScreen(
+                      builder: (context) => const UpiPaymentScreen(
                         order: 1, // Pass the appropriate order or data here.
                         packageName: "Day Care- 3D",
                         packagePrice: '\u20B9 350',
@@ -76,7 +82,7 @@ class PackageScreen extends StatelessWidget {
                   // Navigate to UpiPaymentScreen and pass package details.
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => UpiPaymentScreen(
+                      builder: (context) => const UpiPaymentScreen(
                         order: 1, // Pass the appropriate order or data here.
                         packageName: "Day Care- 5D",
                         packagePrice: '\u20B9 600',
@@ -99,7 +105,7 @@ class PackageScreen extends StatelessWidget {
                   // Navigate to UpiPaymentScreen and pass package details.
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => UpiPaymentScreen(
+                      builder: (context) => const UpiPaymentScreen(
                         order: 1, // Pass the appropriate order or data here.
                         packageName: "Day Care- 7D",
                         packagePrice: '\u20B9 900',
@@ -122,7 +128,7 @@ class PackageScreen extends StatelessWidget {
                   // Navigate to UpiPaymentScreen and pass package details.
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => UpiPaymentScreen(
+                      builder: (context) => const UpiPaymentScreen(
                         order: 1, // Pass the appropriate order or data here.
                         packageName: "Day Care- 10D",
                         packagePrice: '\u20B9 1350',
@@ -145,7 +151,7 @@ class PackageScreen extends StatelessWidget {
                   // Navigate to UpiPaymentScreen and pass package details.
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => UpiPaymentScreen(
+                      builder: (context) => const UpiPaymentScreen(
                         order: 1, // Pass the appropriate order or data here.
                         packageName: "Day Care- 15D",
                         packagePrice: '\u20B9 2000',
@@ -168,7 +174,7 @@ class PackageScreen extends StatelessWidget {
                   // Navigate to UpiPaymentScreen and pass package details.
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => UpiPaymentScreen(
+                      builder: (context) => const UpiPaymentScreen(
                         order: 1, // Pass the appropriate order or data here.
                         packageName: "Day Care- 20D",
                         packagePrice: '\u20B9 2650',
@@ -191,7 +197,7 @@ class PackageScreen extends StatelessWidget {
                   // Navigate to UpiPaymentScreen and pass package details.
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => UpiPaymentScreen(
+                      builder: (context) => const UpiPaymentScreen(
                         order: 1, // Pass the appropriate order or data here.
                         packageName: "Day Care- 30D",
                         packagePrice: '\u20B9 3950',
