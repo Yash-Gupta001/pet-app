@@ -1,6 +1,93 @@
 import 'package:flutter/material.dart';
 import 'package:basics/upi_payment_screen.dart';
 
+class AddressScreen extends StatelessWidget {
+  final num order;
+  final String packageName;
+  final String packagePrice;
+  final String packageDetails;
+
+  AddressScreen({
+    required this.order,
+    required this.packageName,
+    required this.packagePrice,
+    required this.packageDetails,
+  });
+
+  TextEditingController emailAddressController = TextEditingController();
+  TextEditingController contactNumberController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Delivery location'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Order: $order'),
+            Text('Package Name: $packageName'),
+            Text('Package Price: $packagePrice'),
+            Text('Package Details: $packageDetails'),
+            const SizedBox(height: 20),
+            const Text(
+              'Enter Your Information:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: emailAddressController,
+              decoration: const InputDecoration(
+                labelText: 'Email Address',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: contactNumberController,
+              decoration: const InputDecoration(
+                labelText: 'Contact Number',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              controller: addressController,
+              decoration: const InputDecoration(
+                labelText: 'Address',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => UpiPaymentScreen(
+                      order: order,
+                      packageName: packageName,
+                      packagePrice: packagePrice,
+                      packageDetails: packageDetails,
+                    ),
+                  ),
+                );
+              },
+              child: const Text('Purchase'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class Toy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -22,45 +109,52 @@ class Toy extends StatelessWidget {
         children: [
           buildProductCard(
             context,
-            'Product 1',
+            'Bolt laser',
             'assets/toy/bolt_laser_electric_toy.jpg',
-            19.99,
-          ), 
+            1999,
+            packageDetails: "Toy Package Details 1",
+          ),
           buildProductCard(
             context,
             'Big ball',
             'assets/toy/big_ball.jpg',
-            10,
+            1000,
+            packageDetails: "Toy Package Details 2",
           ),
           buildProductCard(
             context,
             'Food Dispenser Ball',
             'assets/toy/food_dispenser_ball.jpg',
             39.99,
+            packageDetails: "Toy Package Details 3"
           ),
           buildProductCard(
             context,
             'Rope',
             'assets/toy/rope.jpg',
             49.99,
+            packageDetails: "Toy Package Details 4",
           ),
           buildProductCard(
             context,
             'Silicon Bone',
             'assets/toy/silicon_bone.jpg',
             59.99,
+            packageDetails: "Toy Package Details 5",
           ),
           buildProductCard(
             context,
             'Stuffed Dinosaur',
             'assets/toy/stuffed_dinosaur.jpg',
             69.99,
+            packageDetails: "Toy Package Details 6",
           ),
           buildProductCard(
             context,
             'Throwing Ropeknot',
             'assets/toy/throwing_ropeknot.jpg',
             79.99,
+            packageDetails: "Toy Package Details 7",
           ),
         ],
       ),
@@ -72,16 +166,18 @@ class Toy extends StatelessWidget {
     String productName,
     String productImage,
     double productPrice,
+    {required String packageDetails} // Added optional parameter for package details
   ) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductDetailPage(
-              productName: productName,
-              productImage: productImage,
-              productPrice: productPrice,
+            builder: (context) => AddressScreen(
+              order: 1, // Sample value, replace with your order logic
+              packageName: productName, // Pass product name as package name
+              packagePrice: productPrice.toString(), // Pass product price as package price
+              packageDetails: packageDetails, // Pass package details
             ),
           ),
         );
@@ -123,57 +219,6 @@ class Toy extends StatelessWidget {
                     ),
                   ),
                 ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-class ProductDetailPage extends StatelessWidget {
-  final String productName;
-  final String productImage;
-  final double productPrice;
-
-  const ProductDetailPage({
-    Key? key,
-    required this.productName,
-    required this.productImage,
-    required this.productPrice,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(productName),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              productImage,
-              width: 200,
-              height: 200,
-              fit: BoxFit.contain,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              productName,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '₹$productPrice',
-              style: const TextStyle(
-                fontSize: 18,
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
               ),
             ),
           ],

@@ -12,7 +12,10 @@ class MyPhone extends StatefulWidget {
 
 class _MyPhoneState extends State<MyPhone> {
   TextEditingController countrycode = TextEditingController();
+  TextEditingController nameController = TextEditingController(); // Added
+  TextEditingController phoneController = TextEditingController(); // Added
   var phone = "";
+  var name = ""; 
 
   @override
   void initState() {
@@ -44,7 +47,7 @@ class _MyPhoneState extends State<MyPhone> {
                 height: 10,
               ),
               const Text(
-                "You need to register your phone without getting started!",
+                "You need to register your phone !",
                 style: TextStyle(
                   fontSize: 16,
                 ),
@@ -53,6 +56,39 @@ class _MyPhoneState extends State<MyPhone> {
               const SizedBox(
                 height: 30,
               ),
+              // Container for Name
+              Container(
+                height: 55,
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    SizedBox(
+                      width: 200, 
+                      child: TextField(
+                        controller: nameController,
+                        onChanged: (value) {
+                          name = value;
+                        },
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Name", // hint text
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              // Container for Phone Number
               Container(
                 height: 55,
                 decoration: BoxDecoration(
@@ -116,7 +152,10 @@ class _MyPhoneState extends State<MyPhone> {
                       verificationFailed: (FirebaseAuthException e) {},
                       codeSent: (String verificationId, int? resendToken) {
                         MyPhone.verify = verificationId;
-                        Navigator.pushNamed(context, 'otp' , arguments: phone);
+                        Navigator.pushNamed(context, 'otp', arguments: {
+                          'name': name,
+                          'phone': phone,
+                        });
                       },
                       codeAutoRetrievalTimeout: (String verificationId) {},
                     );

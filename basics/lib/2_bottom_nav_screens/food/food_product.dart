@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:basics/upi_payment_screen.dart';
 
 class Food extends StatelessWidget {
- @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 45,
         automaticallyImplyLeading: false,
         title: const Text(
-          'Toys',
+          'FOOD',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -21,45 +22,45 @@ class Food extends StatelessWidget {
         children: [
           buildProductCard(
             context,
-            'Product 1',
-            'assets/toy/bolt_laser_electric_toy.jpg',
-            19.99,
+            'Pedigree 10kg',
+            'assets/food/Pedigree.jpg',
+            2490,
           ), 
           buildProductCard(
             context,
-            'Big ball',
-            'assets/toy/big_ball.jpg',
-            10,
+            'PedigreePro 1.2kg',
+            'assets/food/PedigreePro.webp',
+            458,
           ),
           buildProductCard(
             context,
-            'Food Dispenser Ball',
-            'assets/toy/food_dispenser_ball.jpg',
+            'Henlo Dry',
+            'assets/food/Henlo_Dry_Food.webp',
             39.99,
           ),
           buildProductCard(
             context,
-            'Rope',
-            'assets/toy/rope.jpg',
-            49.99,
+            'Royal canin',
+            'assets/food/Royalcanin.webp',
+            990,
           ),
           buildProductCard(
             context,
-            'Silicon Bone',
-            'assets/toy/silicon_bone.jpg',
-            59.99,
+            'Canine Greek',
+            'assets/food/canine.webp',
+            684,
           ),
           buildProductCard(
             context,
-            'Stuffed Dinosaur',
-            'assets/toy/stuffed_dinosaur.jpg',
-            69.99,
+            'Dog Bikkit',
+            'assets/food/dog-bikkit.webp',
+            320,
           ),
           buildProductCard(
             context,
-            'Throwing Ropeknot',
-            'assets/toy/throwing_ropeknot.jpg',
-            79.99,
+            'Puppy Snacks',
+            'assets/food/Puppy_Snacks.webp',
+            250,
           ),
         ],
       ),
@@ -77,7 +78,7 @@ class Food extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductDetailPage(
+            builder: (context) => ProductDetailScreen(
               productName: productName,
               productImage: productImage,
               productPrice: productPrice,
@@ -86,56 +87,27 @@ class Food extends StatelessWidget {
         );
       },
       child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            AspectRatio(
-              aspectRatio: 16 / 9,
-              child: Image.asset(
-                productImage,
-                fit: BoxFit.contain,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    productName,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '₹$productPrice',
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+        child: ListTile(
+          leading: Image.asset(
+            productImage,
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+          ),
+          title: Text(productName),
+          subtitle: Text('₹$productPrice'),
         ),
       ),
     );
   }
 }
-class ProductDetailPage extends StatelessWidget {
+
+class ProductDetailScreen extends StatelessWidget {
   final String productName;
   final String productImage;
   final double productPrice;
 
-  const ProductDetailPage({
+  const ProductDetailScreen({
     Key? key,
     required this.productName,
     required this.productImage,
@@ -175,6 +147,23 @@ class ProductDetailPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddressScreen(
+                      order: 1, // Assuming a default order value
+                      packageName: productName,
+                      packageDetails: 'Some details here', // Add actual package details
+                      productPrice: productPrice, // Pass product price to AddressScreen
+                    ),
+                  ),
+                );
+              },
+              child: const Text('Purchase'),
+            ),
           ],
         ),
       ),
@@ -182,3 +171,90 @@ class ProductDetailPage extends StatelessWidget {
   }
 }
 
+class AddressScreen extends StatelessWidget {
+  final num order;
+  final String packageName;
+  final String packageDetails;
+  final double productPrice; // Added productPrice variable
+
+  AddressScreen({
+    required this.order,
+    required this.packageName,
+    required this.packageDetails,
+    required this.productPrice,
+  });
+
+  TextEditingController emailAddressController = TextEditingController();
+  TextEditingController contactNumberController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Delivery location'),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Order: $order'),
+              Text('Package Name: $packageName'),
+              Text('Package Details: $packageDetails'),
+              const SizedBox(height: 20),
+              const Text(
+                'Enter Your Information:',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: emailAddressController,
+                decoration: const InputDecoration(
+                  labelText: 'Email Address',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: contactNumberController,
+                decoration: const InputDecoration(
+                  labelText: 'Contact Number',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: addressController,
+                decoration: const InputDecoration(
+                  labelText: 'Address',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => UpiPaymentScreen(
+                        order: order,
+                        packageName: packageName,
+                        packagePrice: productPrice.toString(), // Pass productPrice to UpiPaymentScreen
+                        packageDetails: packageDetails,
+                      ),
+                    ),
+                  );
+                },
+                child: const Text('Buy'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
