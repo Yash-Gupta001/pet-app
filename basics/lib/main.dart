@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.amber,
         ),
       ),
-      initialRoute: 'splash',
+      initialRoute: 'navigation',
       routes: {
         'map': (context) =>  Mapscreen(),
         'phone': (context) => const MyPhone(),

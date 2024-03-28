@@ -45,6 +45,7 @@ dependencies:
   flutter_map: ^6.1.0
   latlong2: ^0.9.0
   url_launcher: ^6.2.5
+  animations: ^2.0.11
 
 
 dev_dependencies:
@@ -76,6 +77,9 @@ flutter:
     - assets/toy/
     - assets/accessories/
     - assets/food/
+    - assets/clothes/
+    - assets/accessories/
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

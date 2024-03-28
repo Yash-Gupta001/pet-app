@@ -3,7 +3,6 @@ import 'clothes/cloth_product.dart';
 import 'food/food_product.dart';
 import 'medicine/medicine.dart';
 import 'pet_accessories/accessories.dart';
-import 'shampoo/pet_shampoo.dart';  
 import 'toys/pet_toy.dart'; 
 
 
@@ -56,7 +55,9 @@ class ProductScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 //
-                GestureDetector(
+
+                
+               /* GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
@@ -72,7 +73,7 @@ class ProductScreen extends StatelessWidget {
                     imagePath: "assets/shampoo.jfif",
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 10),*/
                 //
 
 
