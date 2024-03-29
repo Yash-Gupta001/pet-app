@@ -6,7 +6,7 @@ class Clothes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(220), 
+        preferredSize: const Size.fromHeight(220), 
         child: AppBar(
           automaticallyImplyLeading: false,
           flexibleSpace: SafeArea(

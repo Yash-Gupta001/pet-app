@@ -1,3 +1,4 @@
+import 'package:basics/2_bottom_nav_screens/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -159,6 +160,16 @@ class _MyPhoneState extends State<MyPhone> {
                       },
                       codeAutoRetrievalTimeout: (String verificationId) {},
                     );
+                   /* Navigator.of(context).push(MaterialPageRoute(builder: (context) => UserScreen(
+        name: nameController.text,
+        phone: phoneController.toString(),
+        /*
+                        TextEditingController nameController = TextEditingController(); // Added
+                        TextEditingController phoneController = TextEditingController(); // Added
+        */
+      )
+      )
+      );*/
                   },
                   child: const Text("Send the code"),
                 ),

@@ -67,7 +67,6 @@ class _SplashScreenState extends State<SplashScreenWidget> {
 
       body:
       Center(
-        // Use the Image.asset widget to display the image.
         child: Image.asset(
           'assets/splash.jpg',  
           width: 500,  

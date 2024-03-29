@@ -37,7 +37,7 @@ class Accessories extends StatelessWidget {
           buildProductCard(
             context,
             'Portable Bed',
-            'assets/accessories/portablr_bed.webp',
+            'assets/accessories/portable_bed.webp',
             1800,
           ),
           buildProductCard(
