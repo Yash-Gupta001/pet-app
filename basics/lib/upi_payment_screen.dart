@@ -1,3 +1,5 @@
+// ignore_for_file: curly_braces_in_flow_control_structures, prefer_is_empty, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:upi_india/upi_india.dart';
 
@@ -84,7 +86,7 @@ class _UpiPaymentScreenState extends State<UpiPaymentScreen>{
                 _transaction = initiateTransaction(app);
                 setState(() {});
               },
-              child: Container(
+              child: SizedBox(
                 height: 100,
                 width: 100,
                 child: Column(

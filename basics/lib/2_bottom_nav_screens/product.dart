@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'clothes/cloth_product.dart';
 import 'food/food_product.dart';
