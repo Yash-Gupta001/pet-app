@@ -56,10 +56,9 @@ class ProductScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                //
 
                 
-               /* GestureDetector(
+                /* GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
@@ -77,15 +76,6 @@ class ProductScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),*/
                 //
-
-
-
-
-                /*
-
-                                to be continued
-
-                */
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
