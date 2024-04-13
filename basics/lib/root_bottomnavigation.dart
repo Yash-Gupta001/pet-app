@@ -1,5 +1,5 @@
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import '2_bottom_nav_screens/home.dart';
 import '2_bottom_nav_screens/package.dart';
 import '2_bottom_nav_screens/user.dart';
@@ -14,33 +14,51 @@ class RootBottomNavigation extends StatefulWidget {
 
 class _RootBottomNavigationState extends State<RootBottomNavigation> {
   int _currentIndex = 0;
+  final List<Widget> _screens = [
+    HomeScreen(),
+    PackageScreen(),
+    ProductScreen(),
+    UserScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: _currentIndex, children: [
-        HomeScreen(),
-        PackageScreen(),
-        ProductScreen(),
-        UserScreen(),
-      ]),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey,
-        selectedItemColor: Colors.amber,
-        unselectedItemColor: Colors.black, 
+      body: _screens[_currentIndex],
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.transparent,
+        color: Colors.amber,
+        buttonBackgroundColor: Colors.amber,
+        height: 60,
+        animationDuration: Duration(milliseconds: 200),
+        animationCurve: Curves.easeInOut,
+        index: _currentIndex,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
         },
-        currentIndex: _currentIndex,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.all_inclusive), label: 'Day-care'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shop_sharp), label: 'product'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.verified_user), label: 'user'),
+        items: <Widget>[
+          Icon(
+            Icons.home,
+            size: 30,
+            color: _currentIndex == 0 ? Colors.white : Colors.black,
+          ),
+          Icon(
+            Icons.all_inclusive,
+            size: 30,
+            color: _currentIndex == 1 ? Colors.white : Colors.black,
+          ),
+          Icon(
+            Icons.shop_sharp,
+            size: 30,
+            color: _currentIndex == 2 ? Colors.white : Colors.black,
+          ),
+          Icon(
+            Icons.verified_user,
+            size: 30,
+            color: _currentIndex == 3 ? Colors.white : Colors.black,
+          ),
         ],
       ),
     );
