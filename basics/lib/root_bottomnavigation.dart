@@ -30,7 +30,7 @@ class _RootBottomNavigationState extends State<RootBottomNavigation> {
         color: Colors.amber,
         buttonBackgroundColor: Colors.amber,
         height: 60,
-        animationDuration: Duration(milliseconds: 200),
+        animationDuration: const Duration(milliseconds: 200),
         animationCurve: Curves.easeInOut,
         index: _currentIndex,
         onTap: (index) {
