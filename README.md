@@ -23,7 +23,7 @@ To run this project locally, ensure you have the following installed:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/flutter-pet-care-app.git
+   git clone https://github.com/Yash-Gupta001/flutter-pet-care-app.git
    cd flutter-pet-care-app
    ```
 
