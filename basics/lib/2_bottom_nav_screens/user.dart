@@ -51,7 +51,7 @@ return Scaffold(
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
-                          'Phone no.: 8805570037',
+                          'Phone no.: ##########',
                           style: TextStyle(fontSize: 18.0),
                         ),
                       ),
