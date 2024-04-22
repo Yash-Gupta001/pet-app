@@ -61,6 +61,7 @@ class _UpiPaymentScreenState extends State<UpiPaymentScreen>{
       transactionNote: 'Not actual. Just an example.',
       amount: 1.00,
       flexibleAmount: true,
+      
     );
   }
 
