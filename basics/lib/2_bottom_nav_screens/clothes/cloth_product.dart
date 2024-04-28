@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:basics/upi_payment_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+//import 'package:image_picker/image_picker.dart';
 
 class Clothes extends StatelessWidget {
   @override
@@ -39,89 +41,65 @@ class Clothes extends StatelessWidget {
           ),
         ),
       ),
-
-        body: ListView(
+      body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          buildProductCard(
-            context,
-            'Chucky Dress',
-            'assets/clothes/chucky.jpg',
-            850,
-          ), 
-          buildProductCard(
-            context,
-            'Raincoat',
-            'assets/clothes/Rain_coat.webp',
-            720,
-          ),
-          buildProductCard(
-            context,
-            'Banana Dress',
-            'assets/clothes/banana.jpg',
-            900,
-          ),
-          buildProductCard(
-            context,
-            'Dog tuxedo',
-            'assets/clothes/coat.jpg',
-            1200,
-          ),
-          buildProductCard(
-            context,
-            'Woven Dress',
-            'assets/clothes/woven.webp',
-            684,
-          ),
-          buildProductCard(
-            context,
-            'Winter Jacket',
-            'assets/clothes/jacket.webp',
-            1320,
-          ),
-          buildProductCard(
-            context,
-            'Cosplay spider',
-            'assets/clothes/cosplay.webp',
-            950,
-          ),
+          buildProductCard(context, 'Chucky Dress', 'chucky.jpg', 850),
+          buildProductCard(context, 'Raincoat', 'Rain_coat.webp', 720),
+          buildProductCard(context, 'Banana Dress', 'banana.jpg', 900),
+          buildProductCard(context, 'Dog tuxedo', 'coat.jpg', 1200),
+          buildProductCard(context, 'Woven Dress', 'woven.webp', 684),
+          buildProductCard(context, 'Winter Jacket', 'jacket.webp', 1320),
+          buildProductCard(context, 'Cosplay spider', 'cosplay.webp', 950),
         ],
       ),
     );
   }
 
-  Widget buildProductCard(
-    BuildContext context,
-    String productName,
-    String productImage,
-    double productPrice,
-  ) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductDetailScreen(
-              productName: productName,
-              productImage: productImage,
-              productPrice: productPrice,
+  Widget buildProductCard(BuildContext context, String productName, String productImage, double productPrice) {
+    return FutureBuilder(
+      future: getImageUrl(productImage),
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductDetailScreen(
+                    productName: productName,
+                    productImage: snapshot.data!,
+                    productPrice: productPrice,
+                  ),
+                ),
+              );
+            },
+            child: Card(
+              child: ListTile(
+                leading: Image.network(
+                  snapshot.data!,
+                  width: 73,
+                  height: 73,
+                  fit: BoxFit.cover,
+                ),
+                title: Text(productName),
+                subtitle: Text('₹$productPrice'),
+              ),
             ),
-          ),
-        );
+          );
+        } else if (snapshot.hasError) {
+          return Text('Error loading image');
+        }
+        return CircularProgressIndicator();
       },
-      child: Card(
-        child: ListTile(
-          leading: Image.asset(
-            productImage,
-            width: 73,
-            height: 73,
-            fit: BoxFit.cover,
-          ),
-          title: Text(productName),
-          subtitle: Text('₹$productPrice'),
-        ),
-      ),
     );
+  }
+
+  Future<String> getImageUrl(String imageName) async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref = storage.ref().child('clothes/$imageName');
+    String url = await ref.getDownloadURL();
+    return url;
   }
 }
 
@@ -266,7 +244,7 @@ class AddressScreen extends StatelessWidget {
                       builder: (context) => UpiPaymentScreen(
                         order: order,
                         packageName: packageName,
-                        packagePrice: productPrice.toString(), // Pass productPrice to UpiPaymentScreen
+                        packagePrice: productPrice.toString(),
                         packageDetails: packageDetails,
                       ),
                     ),

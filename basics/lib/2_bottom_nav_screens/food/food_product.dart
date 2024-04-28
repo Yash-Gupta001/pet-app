@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:basics/upi_payment_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+//import 'package:image_picker/image_picker.dart';
 
 class Food extends StatelessWidget {
   @override
@@ -7,7 +9,6 @@ class Food extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 45,
-        automaticallyImplyLeading: false,
         title: const Text(
           'FOOD',
           style: TextStyle(
@@ -20,85 +21,65 @@ class Food extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          buildProductCard(
-            context,
-            'Pedigree 10kg',
-            'assets/food/Pedigree.jpg',
-            2490,
-          ), 
-          buildProductCard(
-            context,
-            'PedigreePro 1.2kg',
-            'assets/food/PedigreePro.webp',
-            458,
-          ),
-          buildProductCard(
-            context,
-            'Henlo Dry',
-            'assets/food/Henlo_Dry_Food.webp',
-            39.99,
-          ),
-          buildProductCard(
-            context,
-            'Royal canin',
-            'assets/food/Royalcanin.webp',
-            990,
-          ),
-          buildProductCard(
-            context,
-            'Canine Greek',
-            'assets/food/canine.webp',
-            684,
-          ),
-          buildProductCard(
-            context,
-            'Dog Bikkit',
-            'assets/food/dog-bikkit.webp',
-            320,
-          ),
-          buildProductCard(
-            context,
-            'Puppy Snacks',
-            'assets/food/Puppy_Snacks.webp',
-            250,
-          ),
+          buildProductCard(context, 'Pedigree 10kg', 'Pedigree.jpg', 2490),
+          buildProductCard(context, 'PedigreePro 1.2kg', 'PedigreePro.webp', 458),
+          buildProductCard(context, 'Henlo Dry', 'Henlo_Dry_Food.webp', 39.99),
+          buildProductCard(context, 'Royal Canin', 'Royalcanin.webp', 990),
+          buildProductCard(context, 'Canine Greek', 'canine.webp', 684),
+          buildProductCard(context, 'Dog Bikkit', 'dog-bikkit.webp', 320),
+          buildProductCard(context, 'Puppy Snacks', 'Puppy_Snacks.webp', 250),
         ],
       ),
     );
   }
 
-  Widget buildProductCard(
-    BuildContext context,
-    String productName,
-    String productImage,
-    double productPrice,
-  ) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductDetailScreen(
-              productName: productName,
-              productImage: productImage,
-              productPrice: productPrice,
-            ),
-          ),
-        );
+  Widget buildProductCard(BuildContext context, String productName, String productImage, double productPrice) {
+    return FutureBuilder<String>(
+      future: getImageUrl(productImage), // Retrieve the image URL from Firebase Storage
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProductDetailScreen(
+                      productName: productName,
+                      productImage: snapshot.data!, // Use the Firebase Storage URL
+                      productPrice: productPrice,
+                    ),
+                  ),
+                );
+              },
+              child: Card(
+                child: ListTile(
+                  leading: Image.network(
+                    snapshot.data!,
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+                  title: Text(productName),
+                  subtitle: Text('₹$productPrice'),
+                ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text("Error loading image: ${snapshot.error}");
+          }
+        }
+
+        return const Center(child: CircularProgressIndicator()); // Loading indicator
       },
-      child: Card(
-        child: ListTile(
-          leading: Image.asset(
-            productImage,
-            width: 50,
-            height: 50,
-            fit: BoxFit.cover,
-          ),
-          title: Text(productName),
-          subtitle: Text('₹$productPrice'),
-        ),
-      ),
     );
+  }
+
+  Future<String> getImageUrl(String imageName) async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref = storage.ref().child('food/$imageName'); // Ensure this path is correct
+    String url = await ref.getDownloadURL();
+    return url;
   }
 }
 
@@ -124,11 +105,24 @@ class ProductDetailScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              productImage,
-              width: 200,
-              height: 200,
-              fit: BoxFit.contain,
+            FutureBuilder<String>(
+              future: getImageUrl(productImage),
+              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    return Image.network(
+                      snapshot.data!,
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.contain,
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text("Error loading image: ${snapshot.error}");
+                  }
+                }
+
+                return const CircularProgressIndicator(); // Loading indicator
+              },
             ),
             const SizedBox(height: 16),
             Text(
@@ -154,10 +148,10 @@ class ProductDetailScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddressScreen(
-                      order: 1, // Assuming a default order value
+                      order: 1,
                       packageName: productName,
-                      packageDetails: 'Some details here', // Add actual package details
-                      productPrice: productPrice, // Pass product price to AddressScreen
+                      packageDetails: 'Details about $productName.', // Provide meaningful details
+                      productPrice: productPrice,
                     ),
                   ),
                 );
@@ -169,30 +163,34 @@ class ProductDetailScreen extends StatelessWidget {
       ),
     );
   }
+
+  Future<String> getImageUrl(String imageName) async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref = storage.ref().child('food/$imageName'); // Ensure this path is correct
+    String url = await ref.getDownloadURL();
+    return url;
+  }
 }
 
 class AddressScreen extends StatelessWidget {
   final num order;
   final String packageName;
   final String packageDetails;
-  final double productPrice; // Added productPrice variable
+  final double productPrice;
 
-  AddressScreen({
+  const AddressScreen({
+    Key? key,
     required this.order,
     required this.packageName,
     required this.packageDetails,
     required this.productPrice,
-  });
-
-  TextEditingController emailAddressController = TextEditingController();
-  TextEditingController contactNumberController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Delivery location'),
+        title: const Text('Delivery Location'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -213,7 +211,7 @@ class AddressScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               TextFormField(
-                controller: emailAddressController,
+                controller: TextEditingController(),
                 decoration: const InputDecoration(
                   labelText: 'Email Address',
                   border: OutlineInputBorder(),
@@ -221,7 +219,7 @@ class AddressScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               TextFormField(
-                controller: contactNumberController,
+                controller: TextEditingController(),
                 decoration: const InputDecoration(
                   labelText: 'Contact Number',
                   border: OutlineInputBorder(),
@@ -229,7 +227,7 @@ class AddressScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               TextFormField(
-                controller: addressController,
+                controller: TextEditingController(),
                 decoration: const InputDecoration(
                   labelText: 'Address',
                   border: OutlineInputBorder(),
@@ -238,7 +236,8 @@ class AddressScreen extends StatelessWidget {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(
+                  Navigator.push(
+                    context,
                     MaterialPageRoute(
                       builder: (context) => UpiPaymentScreen(
                         order: order,
