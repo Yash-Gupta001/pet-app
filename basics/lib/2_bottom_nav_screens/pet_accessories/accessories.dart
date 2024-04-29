@@ -1,6 +1,7 @@
+// ignore_for_file: sort_child_properties_last, prefer_const_constructors, prefer_const_constructors_in_immutables, must_be_immutable, use_key_in_widget_constructors
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:basics/upi_payment_screen.dart';
-
 
 class Accessories extends StatelessWidget {
   @override
@@ -8,7 +9,6 @@ class Accessories extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 45,
-        //toolbarOpacity: 0.3,
         automaticallyImplyLeading: false,
         title: const Text(
           'Accessories',
@@ -25,43 +25,43 @@ class Accessories extends StatelessWidget {
           buildProductCard(
             context,
             'Mouth Cover muzzles',
-            'assets/accessories/mouth.webp',
+            'mouth.webp', // Updated to relative path
             2490,
-          ), 
+          ),
           buildProductCard(
             context,
             'Hair Brush',
-            'assets/accessories/hair_brush.webp',
+            'hair_brush.webp',
             450,
           ),
           buildProductCard(
             context,
             'Portable Bed',
-            'assets/accessories/portable_bed.webp',
+            'portable_bed.webp',
             1800,
           ),
           buildProductCard(
             context,
             'Dog Harness',
-            'assets/accessories/harness.jpg',
+            'harness.jpg',
             990,
           ),
           buildProductCard(
             context,
             'Dog leash',
-            'assets/accessories/leash.jpg',
+            'leash.jpg',
             340,
           ),
           buildProductCard(
             context,
-            'Retratable Dog Leash',
-            'assets/accessories/retratable_leash.webp',
+            'Retractable Dog Leash',
+            'retratable_leash.webp',
             720,
           ),
           buildProductCard(
             context,
             'Food Bowl 700ml',
-            'assets/accessories/bowl.webp',
+            'bowl.webp',
             270,
           ),
         ],
@@ -72,49 +72,74 @@ class Accessories extends StatelessWidget {
   Widget buildProductCard(
     BuildContext context,
     String productName,
-    String productImage,
+    String productImageFileName,
     double productPrice,
   ) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductDetailScreen(
-              productName: productName,
-              productImage: productImage,
-              productPrice: productPrice,
+    return FutureBuilder<String>(
+      future: getDownloadUrl(productImageFileName), // Fetching URL from Firebase Storage
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error loading image'));
+        } else {
+          final imageUrl = snapshot.data!;
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductDetailScreen(
+                    productName: productName,
+                    productImage: imageUrl, // Pass correct image URL
+                    productPrice: productPrice,
+                  ),
+                ),
+              );
+            },
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                leading: Image.network(
+                  imageUrl,
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+                title: Text(productName),
+                subtitle: Text('₹$productPrice'),
+              ),
             ),
-          ),
-        );
+          );
+        }
       },
-      child: Card(
-        child: ListTile(
-          leading: Image.asset(
-            productImage,
-            width: 50,
-            height: 50,
-            fit: BoxFit.cover,
-          ),
-          title: Text(productName),
-          subtitle: Text('₹$productPrice'),
-        ),
-      ),
     );
+  }
+
+  Future<String> getDownloadUrl(String fileName) async {
+    try {
+      return await FirebaseStorage.instance
+          .ref('accessories/$fileName') // Correct folder in Firebase Storage
+          .getDownloadURL(); // Fetch the download URL
+    } catch (e) {
+      throw Exception("Error fetching URL: $e");
+    }
   }
 }
 
 class ProductDetailScreen extends StatelessWidget {
   final String productName;
-  final String productImage;
+  final String productImage; // Download URL from Firebase Storage
   final double productPrice;
 
-  const ProductDetailScreen({
-    Key? key,
+  ProductDetailScreen({
     required this.productName,
     required this.productImage,
     required this.productPrice,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +151,7 @@ class ProductDetailScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
+            Image.network(
               productImage,
               width: 200,
               height: 200,
@@ -156,10 +181,10 @@ class ProductDetailScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddressScreen(
-                      order: 1, // Assuming a default order value
+                      order: 1, 
                       packageName: productName,
-                      packageDetails: 'Some details here', // Add actual package details
-                      productPrice: productPrice, // Pass product price to AddressScreen
+                      packageDetails: 'Some details here',
+                      productPrice: productPrice,
                     ),
                   ),
                 );
@@ -245,7 +270,7 @@ class AddressScreen extends StatelessWidget {
                       builder: (context) => UpiPaymentScreen(
                         order: order,
                         packageName: packageName,
-                        packagePrice: productPrice.toString(), // Pass productPrice to UpiPaymentScreen
+                        packagePrice: productPrice.toString(),
                         packageDetails: packageDetails,
                       ),
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:basics/upi_payment_screen.dart';
 
 class AddressScreen extends StatelessWidget {
@@ -14,9 +15,9 @@ class AddressScreen extends StatelessWidget {
     required this.packageDetails,
   });
 
-  TextEditingController emailAddressController = TextEditingController();
-  TextEditingController contactNumberController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
+  final TextEditingController emailAddressController = TextEditingController();
+  final TextEditingController contactNumberController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +28,11 @@ class AddressScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start, // Corrected spelling
           children: [
             Text('Order: $order'),
             Text('Package Name: $packageName'),
-            Text('Package Price: $packagePrice'),
+            Text('Package Price: ₹$packagePrice'),
             Text('Package Details: $packageDetails'),
             const SizedBox(height: 20),
             const Text(
@@ -41,15 +42,14 @@ class AddressScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 10),
             TextFormField(
               controller: emailAddressController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Email Address',
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             TextFormField(
               controller: contactNumberController,
               decoration: const InputDecoration(
@@ -57,7 +57,7 @@ class AddressScreen extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             TextFormField(
               controller: addressController,
               decoration: const InputDecoration(
@@ -65,7 +65,7 @@ class AddressScreen extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -94,7 +94,6 @@ class Toy extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 45,
-        automaticallyImplyLeading: false,
         title: const Text(
           'Toys',
           style: TextStyle(
@@ -105,57 +104,34 @@ class Toy extends StatelessWidget {
         ),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16), // Required padding added
         children: [
           buildProductCard(
             context,
-            'Bolt laser',
-            'assets/toy/bolt_laser_electric_toy.jpg',
+            'Bolt Laser',
+            'bolt_laser_electric_toy.jpg', // File name for Firebase Storage
             1999,
-            packageDetails: "Toy Package Details 1",
+            packageDetails: "Laser toy for cats",
           ),
           buildProductCard(
             context,
-            'Big ball',
-            'assets/toy/big_ball.jpg',
+            'Big Ball',
+            'big_ball.jpg',
             1000,
-            packageDetails: "Toy Package Details 2",
+            packageDetails: "A large ball for dogs",
           ),
           buildProductCard(
             context,
             'Food Dispenser Ball',
-            'assets/toy/food_dispenser_ball.jpg',
-            39.99,
-            packageDetails: "Toy Package Details 3"
+            'food_dispenser_ball.jpg',
+            390,
+            packageDetails: "A ball that dispenses food",
           ),
-          buildProductCard(
-            context,
-            'Rope',
-            'assets/toy/rope.jpg',
-            49.99,
-            packageDetails: "Toy Package Details 4",
-          ),
-          buildProductCard(
-            context,
-            'Silicon Bone',
-            'assets/toy/silicon_bone.jpg',
-            59.99,
-            packageDetails: "Toy Package Details 5",
-          ),
-          buildProductCard(
-            context,
-            'Stuffed Dinosaur',
-            'assets/toy/stuffed_dinosaur.jpg',
-            69.99,
-            packageDetails: "Toy Package Details 6",
-          ),
-          buildProductCard(
-            context,
-            'Throwing Ropeknot',
-            'assets/toy/throwing_ropeknot.jpg',
-            79.99,
-            packageDetails: "Toy Package Details 7",
-          ),
+          
+//add more
+
+
+
         ],
       ),
     );
@@ -164,66 +140,89 @@ class Toy extends StatelessWidget {
   Widget buildProductCard(
     BuildContext context,
     String productName,
-    String productImage,
+    String productImageFileName,
     double productPrice,
-    {required String packageDetails} // Added optional parameter for package details
+    {required String packageDetails}
   ) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AddressScreen(
-              order: 1, // Sample value, replace with your order logic
-              packageName: productName, // Pass product name as package name
-              packagePrice: productPrice.toString(), // Pass product price as package price
-              packageDetails: packageDetails, // Pass package details
-            ),
-          ),
-        );
-      },
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            AspectRatio(
-              aspectRatio: 16 / 9,
-              child: Image.asset(
-                productImage,
-                fit: BoxFit.contain,
+    return FutureBuilder<String>(
+      future: getDownloadUrl(productImageFileName), // Fetching URL from Firebase Storage
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator()); // Loading spinner
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error loading image')); // Error handling
+        } else {
+          final imageUrl = snapshot.data!;
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddressScreen(
+                    order: 1, // Example order number
+                    packageName: productName,
+                    packagePrice: productPrice.toString(),
+                    packageDetails: packageDetails,
+                  ),
+                ),
+              );
+            },
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    productName,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                  AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image.network(
+                      imageUrl, // Display image from Firebase Storage
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '₹$productPrice',
-                    style: const TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                  Padding(
+                    //const EdgeInsets.all(8),
+                    padding: EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          productName,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '₹$productPrice',
+                          style: const TextStyle(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
+          );
+        }
+      },
     );
+  }
+
+  Future<String> getDownloadUrl(String fileName) async {
+    try {
+      return await FirebaseStorage.instance
+        .ref('toy/$fileName') // Correct folder in Firebase Storage
+        .getDownloadURL(); // Fetch the download URL
+    } catch (e) {
+      throw Exception("Error fetching URL: $e"); // Handle errors
+    }
   }
 }

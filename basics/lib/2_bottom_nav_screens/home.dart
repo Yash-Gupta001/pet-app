@@ -102,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                           alignment: Alignment.bottomLeft,
                           children: [
                             Image.network(
-                              snapshot.data!, // Use the Firebase Storage image URL
+                              snapshot.data!,
                               fit: BoxFit.cover,
                               width: double.infinity,
                               height: double.infinity,
