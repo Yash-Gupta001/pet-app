@@ -56,6 +56,7 @@ class HomeScreen extends StatelessWidget {
         ),
         backgroundColor: Colors.amber,
         elevation: 4,
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

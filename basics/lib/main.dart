@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         'navigation': (context) => const RootBottomNavigation(),
         'splash': (context) => SplashScreenWidget(),
       },
-      home: const RootBottomNavigation(),
+      home: RootBottomNavigation(),
     );
   }
 }

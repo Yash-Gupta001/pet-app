@@ -94,7 +94,7 @@ class _MyVerifyState extends State<MyVerify> {
                 onChanged: (value) {
                   code=value;
                 },
-                ),
+              ),
                 // defaultPinTheme: defaultPinTheme,
                 // focusedPinTheme: focusedPinTheme,
                 // submittedPinTheme: submittedPinTheme,
@@ -112,17 +112,14 @@ class _MyVerifyState extends State<MyVerify> {
                             borderRadius: BorderRadius.circular(10))),
                     onPressed: () async {
 
-                      try{
+                      try {
                         PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: MyPhone.verify, smsCode: code);
                         // Sign the user in (or link) with the credential
                         await auth.signInWithCredential(credential);
-                        Navigator.pushNamedAndRemoveUntil(context, "navigation", (route) => false);
+                        Navigator.pushReplacementNamed(context, "navigation");
+                      } catch (e) {
+                        print("Wrong OTP! Please check properly.");
                       }
-
-                      catch(e){
-                        print("wrong otp! please check properly");
-                      }
-
                     },
                     child: const Text("Confirm OTP")),
               ),
@@ -130,14 +127,10 @@ class _MyVerifyState extends State<MyVerify> {
                 children: [
                   TextButton(
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          'phone',
-                          (route) => false,
-                        );
+                        Navigator.pushReplacementNamed(context, 'phone');
                       },
                       child: const Text(
-                        "Edit Phone Number ?",
+                        "Edit Phone Number?",
                         style: TextStyle(color: Colors.black),
                       ))
                 ],

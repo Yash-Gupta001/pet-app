@@ -25,7 +25,7 @@ class Accessories extends StatelessWidget {
           buildProductCard(
             context,
             'Mouth Cover muzzles',
-            'mouth.webp', // Updated to relative path
+            'mouth.webp',
             2490,
           ),
           buildProductCard(

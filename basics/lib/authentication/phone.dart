@@ -1,4 +1,3 @@
-import 'package:basics/2_bottom_nav_screens/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

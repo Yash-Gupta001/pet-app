@@ -44,12 +44,12 @@ class AddressScreen extends StatelessWidget {
             ),
             TextFormField(
               controller: emailAddressController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Email Address',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFormField(
               controller: contactNumberController,
               decoration: const InputDecoration(
@@ -57,7 +57,7 @@ class AddressScreen extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextFormField(
               controller: addressController,
               decoration: const InputDecoration(
@@ -65,7 +65,7 @@ class AddressScreen extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -84,6 +84,7 @@ class AddressScreen extends StatelessWidget {
           ],
         ),
       ),
+      
     );
   }
 }
@@ -143,14 +144,15 @@ class Toy extends StatelessWidget {
     String productImageFileName,
     double productPrice,
     {required String packageDetails}
-  ) {
+  )
+  {
     return FutureBuilder<String>(
       future: getDownloadUrl(productImageFileName), // Fetching URL from Firebase Storage
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator()); // Loading spinner
+          return const Center(child: CircularProgressIndicator()); // Loading spinner
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error loading image')); // Error handling
+          return const Center(child: Text('Error loading image')); // Error handling
         } else {
           final imageUrl = snapshot.data!;
           return GestureDetector(
@@ -184,7 +186,7 @@ class Toy extends StatelessWidget {
                   ),
                   Padding(
                     //const EdgeInsets.all(8),
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

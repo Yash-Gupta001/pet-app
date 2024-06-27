@@ -22,7 +22,7 @@ class Clothes extends StatelessWidget {
                   height: 174, 
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/clothes/banner.webp'), 
+                      image: AssetImage('assets/banner.webp'), 
                       fit: BoxFit.cover,
                     ),
                   ),
